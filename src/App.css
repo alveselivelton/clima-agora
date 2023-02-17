@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: linear-gradient(
+    200deg,
+    rgba(24, 140, 208, 1) 0%,
+    rgba(160, 37, 218, 1) 100%
+  );
+}
+
+.content {
+  width: 400px;
+  padding: 35px 10px;
+}
+
+@media (max-width: 425px) {
+  .content {
+    width: 100%;
+  }
+}
