@@ -7,8 +7,13 @@ const weatherApi = axios.create({
 });
 
 export const getWeatherData = async (city) => {
-  const res = await weatherApi.get(
-    `data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`
-  );
+  const res = await weatherApi.get("data/2.5/weather", {
+    params: {
+      q: city,
+      units: "metric",
+      appid: apiKey,
+      lang: "pt_br",
+    },
+  });
   return res.data;
 };

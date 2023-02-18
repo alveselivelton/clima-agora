@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getWeatherData } from "../../api/weatherApi";
 import { BsSearch } from "react-icons/bs";
@@ -12,17 +12,21 @@ import "./styles.css";
 const WeatherForm = () => {
   const [city, setCity] = useState("");
 
-  const { data, isInitialLoading, isError, refetch } = useQuery({
-    queryKey: ["weather"],
+  const inputRef = useRef();
+
+  const { data, isInitialLoading, isError } = useQuery({
+    queryKey: ["weather", city],
     queryFn: async () => getWeatherData(city),
-    enabled: false,
-    retry: 1,
+    enabled: !!city,
+    retry: false,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    refetch();
-    setCity("");
+
+    setCity(inputRef.current.value);
+
+    inputRef.current.value = "";
   };
 
   return (
@@ -31,10 +35,9 @@ const WeatherForm = () => {
         <h1>Busque uma cidade</h1>
         <form className="form-content" onSubmit={handleSubmit}>
           <input
+            ref={inputRef}
             type="text"
             placeholder="Digite o nome de uma cidade"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
           />
           <button type="submit">
             <BsSearch />
